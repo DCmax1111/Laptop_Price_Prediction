@@ -4,25 +4,6 @@ This project predicts the price of laptops based on their specifications using *
 
 ---
 
-## 📂 Project Structure
-Laptop_Price_Prediction/
-│── data/
-│ ├── raw/ # Original dataset
-│ └── processed/ # Cleaned data
-│── models/ # Saved ML models
-│── notebooks/ # Jupyter Notebooks
-│ ├── 01_data_cleaning.ipynb
-│ ├── 02_exploratory_analysis.ipynb
-│ └── 03_model_training.ipynb
-│── src/
-│ ├── utils.py # Helper functions
-│ └── predict.py # CLI prediction script
-│── logs/ # Invalid user input logs
-│── requirements.txt # Project dependencies
-│── README.md # Project description
-
----
-
 ## ⚡ Features
 - Data cleaning & preprocessing  
 - Exploratory data analysis (EDA)  
@@ -71,5 +52,6 @@ GPU: Nvidia GeForce GTX 1050
 ---
 
 ## 👥 Contributors
-- DOMINION CLINTON 
+- DOMINION CLINTON (@)
 - Abasiofon Sendan
+- Teammate 2
