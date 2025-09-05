@@ -71,6 +71,5 @@ GPU: Nvidia GeForce GTX 1050
 ---
 
 ## 👥 Contributors
-- DOMINION CLINTON (@)
-- Teammate 1
-- Teammate 2
+- DOMINION CLINTON 
+- Abasiofon Sendan
