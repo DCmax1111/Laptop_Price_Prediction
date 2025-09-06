@@ -14,11 +14,14 @@ st.set_page_config(
 def load_model_and_features():
     """Load model and feature names with error handling"""
     try:
-        MODEL_PATH = "../models/laptop_price_model.pkl"
-        FEATURES_PATH = "../models/feature_names.pkl"
+        MODEL_PATH = "models/laptop_price_model.pkl"
+        FEATURES_PATH = "models/feature_names.pkl"
         
-        if not os.path.exists(MODEL_PATH) or not os.path.exists(FEATURES_PATH):
+        if not os.path.exists(MODEL_PATH):
             st.error("Model files not found. Please ensure model files are in the correct directory.")
+            return None, None
+        if not os.path.exists(FEATURES_PATH):
+            st.error("Feature files not found. Please ensure feature files are in the correct directory.")
             return None, None
             
         model = joblib.load(MODEL_PATH)
