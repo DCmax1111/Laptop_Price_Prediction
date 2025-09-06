@@ -91,6 +91,7 @@ with col2:
     flash_storage = st.number_input("Flash Storage (GB)", min_value=0, value=0, step=32)
     cpu = st.selectbox("CPU", cpus)
     gpu = st.selectbox("GPU", gpus)
+    speed = st.number_input("CPU Speed (GHz)", min_value=0.5, max_value=6.0, value=2.5, step=0.1)
 
 # Storage validation
 total_storage = ssd + hdd + hybrid + flash_storage
@@ -110,7 +111,8 @@ input_dict = {
     "Hybrid": hybrid,
     "Flash_Storage": flash_storage,
     "Cpu": cpu,
-    "Gpu": gpu
+    "Gpu": gpu,
+    "Cpu_Speed": speed  # NEW FIELD
 }
 
 def predict_price(sample_dict):
@@ -148,12 +150,14 @@ with col_pred2:
                     - {inches}" display, {ram}GB RAM
                     - Storage: {total_storage}GB total
                     - {cpu} + {gpu}
+                    - {cpu} ({speed} GHz) + {gpu}
                     """)
 
 # Display current configuration
 with st.expander("📋 Current Configuration Details"):
     config_df = pd.DataFrame(list(input_dict.items()), columns=['Specification', 'Value'])
-    st.dataframe(config_df, use_container_width=True)
+    config_df["Value"] = config_df["Value"].astype(str)
+    st.dataframe(config_df, width='stretch')
 
 # Footer
 st.markdown("---")
