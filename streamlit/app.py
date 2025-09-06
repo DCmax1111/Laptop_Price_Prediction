@@ -133,11 +133,13 @@ with col_pred2:
     if st.button("🔮 Predict Price", type="primary", use_container_width=True):
         if total_storage == 0:
             st.error("❌ Cannot predict price without storage specification.")
+        elif not cpu or not gpu:
+            st.error("❌ Please specify both CPU and GPU.")
         else:
             with st.spinner("Calculating price..."):
                 price = predict_price(input_dict)
                 if price is not None:
-                    st.success(f" **Predicted Laptop Price: €{price:,.2f}**")
+                    st.success(f"💰 **Predicted Laptop Price: €{price:,.2f}**")
                     
                     # Additional info
                     st.info(f"""
