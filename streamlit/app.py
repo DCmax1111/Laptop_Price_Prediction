@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 import os
 
-#  Load trained model
+#  Using Streamlit to Load trained model
 
 @st.cache_resource
 def load_model():
