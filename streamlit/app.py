@@ -81,9 +81,8 @@ def predict_price(model, sample_encoded):
         return None
 
 def final_price(pred, company, typename, touch):
-    """
-    Adjust predicted laptop price based on range and touchscreen feature.
-"""
+    """Adjust predicted laptop price based on range and touchscreen feature."""
+    final_pred = 0
     # Base adjustment by price range
     if 100 < pred < 400:     # Low-end.
         final_pred = pred * 1.05   # +5%        
