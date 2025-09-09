@@ -47,7 +47,7 @@ Flash storage (GB, 0 if none): 0
 CPU: Intel Core i7
 GPU: Nvidia GeForce GTX 1050
 
-💰 Predicted Laptop Price: €1334.56
+💰 Predicted Laptop Price: €2334.56
 
 ---
 
