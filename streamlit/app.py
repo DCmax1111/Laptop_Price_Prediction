@@ -228,7 +228,7 @@ touch = st.selectbox("Touchscreen", ["Yes", "No"])
 
 ram = st.slider("RAM (GB)", min_value=4, max_value=128, step=4, value=8)
 weight = st.number_input("Weight (kg)", min_value=0.5, max_value=5.0, step=0.1)
-ssd = st.number_input("SSD size (GB)", min_value=0, max_value=4000, value=512, step=128)
+ssd = st.number_input("SSD size (GB)", min_value=32, max_value=4000, value=512, step=32)
 hdd = st.number_input("HDD size (GB)", min_value=0, max_value=6000, value=0, step=500)
 flash = st.number_input("Flash Storage (GB)", min_value=0, max_value=1000, value=0, step=128)
 hybrid = st.number_input("Hybrid storage (GB)", min_value=0, max_value=2000, value=0, step=500)
