@@ -112,7 +112,7 @@ def final_price(pred, company, typename, touch):
         #     st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
         # else:
         #     final_pred += 150
-        st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
+        st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{pred:.2f}")
 
     else:
         st.warning("⚠️ Prediction failed. Please check preprocessing.")
