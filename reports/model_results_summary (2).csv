@@ -1,3 +1,0 @@
-model,MAE,RMSE,R²
-Linear Regression (Scaled Data),243.922,389.4574,0.6916
-Linear Regression (Unscaled Data),218.7522,301.7786,0.8148
