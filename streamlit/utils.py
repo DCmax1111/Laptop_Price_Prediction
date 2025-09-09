@@ -282,7 +282,7 @@ def predict_price(model, sample_encoded):
     """Predict laptop price given specs; logs issues if any."""
     # Safety Checks
     if model is None:
-        print("⚠️ Model not loaded. Please train first.")
+        st.warning("⚠️ Model not loaded. Please train first.")
         return None
     
     try:
@@ -296,7 +296,7 @@ def predict_price(model, sample_encoded):
         return pred
     
     except Exception as e:
-        print("⚠️ Prediction failed. Please check preprocessing.")
+        st.warning("⚠️ Prediction failed. Please check preprocessing.")
         log_event("error", "PREDICT", str(sample_encoded), f"Prediction failure: {e}")
         return None
 
@@ -311,37 +311,38 @@ def final_price(pred, company, typename, touch):
     Returns:
         f_prediction: adjusted price"""
     # Base adjustment by price range
-    if 100 < pred < 400:           # Low-end.
+    if 100 < pred < 400:     # Low-end.
         final_pred = pred * 1.05   # +5%
-        # Touchscreen price bump (+50) ^_^
-        if touch == 0:
-            st.success(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
+        if touch == "No":
+            st.info(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
             st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
-        elif touch == 1:
+        else:  # Touchscreen price bump (+50)
             pred += 50
             final_pred += 50
-            st.success(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
+            st.info(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
             st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
 
     elif 400 < pred < 800:  # Mid-range.
         final_pred = pred * 0.98   # -2%
         # Touchscreen price bump (+100)
-        if touch == 0:
-            st.success(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
+        if touch == "No":
+            st.info(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
             st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
-        elif touch == 1:
+        else:
             pred += 100
             final_pred += 100
-            st.success(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
+            st.info(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
             st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
 
     elif pred >= 800:     # High-end. So we keep it as is.
         # Touchscreen price bump (+150)
-        if touch == 0:
+        if touch == "No":
             st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
-        elif touch == 1:
-            pred += 150
+        else:
             final_pred += 150
-            st.success(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
             st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
 
+    else:
+        st.warning("⚠️ Prediction failed. Please check preprocessing.")
+        log_event("error", "PREDICT", str(pred), f"Prediction failure")
+        return None

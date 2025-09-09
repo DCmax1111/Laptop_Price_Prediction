@@ -86,10 +86,14 @@ typenames = [
     ]
 osys = [
     "Windows 11",
-    "Windows 10", 
+    "Windows 10",
+    "Windows 10 S", 
     "Windows 7", 
-    "MacOS", 
-    "Linux", 
+    "MacOS",
+    "MacOS X",
+    "Linux",
+    "Android",
+    "Chrome OS", 
     "No OS"
     ]
 
@@ -102,7 +106,7 @@ cpu = CPU_MAP.get(cpu_choice, "Other")  # Default to "Other" if not found.
 gpu_choice = st.selectbox("GPU Brand", sorted(list(GPU_MAP.keys())))
 gpu = GPU_MAP.get(gpu_choice, "Other")
 opsys = st.selectbox("Operating System", sorted(osys))
-touch = 1 if st.checkbox("Touchscreen", help="Check if the laptop has a touchscreen display.") else 0
+touch = st.selectbox("Touchscreen", ["Yes", "No"])
 
 ram = st.slider("RAM (GB)", min_value=4, max_value=128, step=4, value=8)
 weight = st.number_input("Weight (kg)", min_value=0.5, max_value=5.0, step=0.1)
@@ -110,11 +114,13 @@ ssd = st.number_input("SSD size (GB)", min_value=0, max_value=4000, value=512, s
 hdd = st.number_input("HDD size (GB)", min_value=0, max_value=6000, value=0, step=500)
 flash = st.number_input("Flash Storage (GB)", min_value=0, max_value=1000, value=0, step=128)
 hybrid = st.number_input("Hybrid storage (GB)", min_value=0, max_value=2000, value=0, step=500)
-inches = st.slider("Screen Size (inches)", min_value=10.0, max_value=20.0, step=0.1, value=12.0)
+inches = st.slider("Screen Size (inches)", min_value=10.0, max_value=18.0, step=0.1, value=12.0)
 
 # Normalizing Company Casing
 if company == "HP": company = "Hp"
 if company == "MSI": company = "Msi"
+if company == "LG": company = "Lg"
+if company == "MacOS": company = "macOS"
 
 # Normalize OS
 if opsys == "Windows 11": opsys = "Windows 10"
@@ -162,12 +168,10 @@ if st.button("Predict Price"):
             else:
                 st.toast("Prediction ready!")
                 sleep(1.0)
-                final_price(prediction, company, typename, touch)
-                
+                final_price(prediction, company, typename, touch)     
         else:
             st.error(f"Prediction failed. Please try again.")
 
     except Exception as e:
         log_event("error", "StreamlitApp", str(received_data), f"Prediction failed: {e}")
-        st.error(f"Something went wrong while generating the prediction. Please check your inputs and try again.")
-
+        st.error(f"Something went wrong while generating the prediction. Please check your inputs and try again.{e}")
