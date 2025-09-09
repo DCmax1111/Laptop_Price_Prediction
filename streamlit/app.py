@@ -113,7 +113,6 @@ def final_price(pred, company, typename, touch):
     elif pred >= 800:     # High-end. So we keep it as is.
         if touch != "Yes":
             st.info(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
-            st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
         elif touch == "Yes":  # Touchscreen price bump (+150)
             pred += 150
             st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{pred:.2f}")
