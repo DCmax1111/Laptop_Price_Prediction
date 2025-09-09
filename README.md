@@ -1,10 +1,10 @@
-# 💻 Laptop Price Prediction
+# Laptop Price Prediction
 
-This project predicts the price of laptops based on their specifications using **Machine Learning**.
+This project is based on the prediction of the price of laptops based on their specifications using **Machine Learning**.
 
 ---
 
-## ⚡ Features
+## Features
 - Data cleaning & preprocessing  
 - Exploratory data analysis (EDA)  
 - Model training (Linear Regression, Random Forest)  
@@ -14,7 +14,7 @@ This project predicts the price of laptops based on their specifications using *
 
 ---
 
-## 🚀 How to Run
+## How to Run
 1. Clone the repository  
    ```bash
    git clone <repo_url>
@@ -31,7 +31,7 @@ This project predicts the price of laptops based on their specifications using *
 
 ---
 
-## 💻 Laptop Price Prediction Demo
+## Laptop Price Prediction Demo
 Please enter your laptop specifications.
 
 Company (e.g., Dell, Apple, HP): Dell
@@ -51,7 +51,14 @@ GPU: Nvidia GeForce GTX 1050
 
 ---
 
-## 👥 Contributors
-- DOMINION CLINTON (@)
-- Abasiofon Sendan
-- Teammate 2
+## Contributors
+- Akpan Idongesit Moses        | 23/EG/CO/086 | @
+- Sendan Abasiofon Uduak       | 23/EG/CO/087 | @abasiofon-sendan
+- Usanga Ofonmbuk Mfon         | 23/EG/CO/092 | @Ofon4real1
+- Mbikan Gracious              | 23/EG/CO/093 | @
+- Okon Godspower Aniedi        | 23/EG/CO/094 | @kompanyokon-hub
+- Okechukwu Victory            | 23/EG/CO/095 | @
+- Clinton Dominion Chinecherem | 23/EG/CO/096 | @DCmax111
+- Usoro Ekemini Sunday         | 23/EG/CO/098 | @
+- Aaron Shedrach Puyaighe      | 23/EG/CO/099 | @Shaddie-B
+- Israel Emana Jimmy           | 23/EG/CO/101 | @Gmie72

@@ -175,3 +175,21 @@ if st.button("Predict Price"):
     except Exception as e:
         log_event("error", "StreamlitApp", str(received_data), f"Prediction failed: {e}")
         st.error(f"Something went wrong while generating the prediction. Please check your inputs and try again.{e}")
+
+st.markdown(
+    """
+    <style>
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        font_size: 12px;
+        color: gray;
+    }
+    </style>
+    <div class="footer">© 2025 Group P</div>
+    """,
+    unsafe_allow_html=True
+)
