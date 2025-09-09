@@ -55,8 +55,7 @@ GPU: Nvidia GeForce GTX 1050
 - Sendan Abasiofon Uduak       | 23/EG/CO/087 | @abasiofon-sendan
 - Usanga Ofonmbuk Mfon         | 23/EG/CO/092 | @Ofon4real1
 - Okon Godspower Aniedi        | 23/EG/CO/094 | @kompanyokon-hub
+- Okechukwu Victory            | 23/EG/CO/095 | @Kabbashlord
 - Clinton Dominion Chinecherem | 23/EG/CO/096 | @DCmax111
 - Aaron Shedrach Puyaighe      | 23/EG/CO/099 | @Shaddie-B
 - Israel Emana Jimmy           | 23/EG/CO/101 | @Gmie72
-
-*Streamlit app url: dc-laptop-price-prediction.streamlit.app*
