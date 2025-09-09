@@ -70,8 +70,8 @@ def predict_price(model, sample_encoded):
     try:
         pred = model.predict(sample_encoded)[0]
         pred = round(float(pred), 4)
-        # Log outliers (dataset: ~€100–€6990)
-        if pred < 100 or pred > 6990:
+        # Log outliers (dataset: ~€100–€6920)
+        if pred < 100 or pred > 6920:
             log_event("warn", "PREDICT", str(pred), f"Unrealistic prediction generated: €{pred}.")
         return pred
     
@@ -89,33 +89,57 @@ def final_price(pred, company, typename, touch):
         # st.info(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
         # st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
         if touch != "Yes":
-            st.info(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
-            st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
+            if pred < 100 or pred > 6920:  # Bounds based on dataset and logic.
+                log_event("warn", "Prediction", str(received_data), f"Unrealistic prediction: {prediction:.2f}")
+                st.warning(f"Prediction seems unrealistic (€{prediction:,.2f}). Please re-check your inputs.")
+            else:
+                st.info(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
+                st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
         elif touch == "Yes":
             pred += 50
             final_pred += 50
-            st.info(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
-            st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
+            if pred < 100 or pred > 6920:  # Bounds based on dataset and logic.
+                log_event("warn", "Prediction", str(received_data), f"Unrealistic prediction: {prediction:.2f}")
+                st.warning(f"Prediction seems unrealistic (€{prediction:,.2f}). Please re-check your inputs.")
+            else:
+                st.info(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
+                st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
 
 
     elif 400 < pred < 800:  # Mid-range.
         final_pred = pred * 0.98   # -2%
         if touch != "Yes":
-            st.info(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
-            st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
+            if prediction < 100 or prediction > 6920:  # Bounds based on dataset and logic.
+                log_event("warn", "Prediction", str(received_data), f"Unrealistic prediction: {prediction:.2f}")
+                st.warning(f"Prediction seems unrealistic (€{prediction:,.2f}). Please re-check your inputs.")
+            else:
+                st.info(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
+                st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
         elif touch == "Yes":   # Touchscreen price bump (+100)
             pred += 100
             final_pred += 100
-            st.info(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
-            st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
+            if prediction < 100 or prediction > 6920:  # Bounds based on dataset and logic.
+                log_event("warn", "Prediction", str(received_data), f"Unrealistic prediction: {prediction:.2f}")
+                st.warning(f"Prediction seems unrealistic (€{prediction:,.2f}). Please re-check your inputs.")
+            else:
+                st.info(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
+                st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{final_pred:.2f}")
 
 
     elif pred >= 800:     # High-end. So we keep it as is.
         if touch != "Yes":
-            st.info(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
+            if prediction < 100 or prediction > 6920:  # Bounds based on dataset and logic.
+                log_event("warn", "Prediction", str(received_data), f"Unrealistic prediction: {prediction:.2f}")
+                st.warning(f"Prediction seems unrealistic (€{prediction:,.2f}). Please re-check your inputs.")
+            else:
+                st.info(f"Approximate Price for the {str(company)} {str(typename)}: €{pred:.2f}")
         elif touch == "Yes":  # Touchscreen price bump (+150)
             pred += 150
-            st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{pred:.2f}")
+            if prediction < 100 or prediction > 6920:  # Bounds based on dataset and logic.
+                log_event("warn", "Prediction", str(received_data), f"Unrealistic prediction: {prediction:.2f}")
+                st.warning(f"Prediction seems unrealistic (€{prediction:,.2f}). Please re-check your inputs.")
+            else:
+                st.success(f"Estimated Price for the {str(company)} {str(typename)}: €{pred:.2f}")
     else:
         st.warning("⚠️ Prediction failed. Please check preprocessing.")
         log_event("error", "PREDICT", str(pred), f"Prediction failure")
