@@ -1,71 +1,173 @@
+from time import sleep
 import streamlit as st
 import pandas as pd
 import joblib
-import os
+from utils import feature_names, preprocess_input, predict_price, log_event, final_price
 
-#  Using Streamlit to Load trained model
+# Load the trained model
+model = joblib.load("models/best_model.pkl")
+# scaler = joblib.load("models/scaler.pkl")
 
-@st.cache_resource
-def load_model():
-    model_path = "../models/laptop_price_model.pkl"   
-    if not os.path.exists(model_path):
-        st.error("❌ Trained model not found. Please train and save the model first.")
-        return None
-    return joblib.load(model_path)
+# Streamlit UI
+st.title("Laptop Price Prediction App")
+st.write("Enter your laptop specifications to predict the price in Euros (€).")
 
-model = load_model()
+# Choice options
+CPU_MAP = {
+    # Intel
+    "Intel Core i3": "Intel",
+    "Intel Core i5": "Intel",
+    "Intel Core i7": "Intel",
+    "Intel Core i9": "Intel",
+    "Intel Pentium": "Intel",
+    "Intel Celeron": "Intel",
+
+    # AMD
+    "AMD Ryzen 3": "AMD",
+    "AMD Ryzen 5": "AMD",
+    "AMD Ryzen 7": "AMD",
+    "AMD Ryzen 9": "AMD",
+    "AMD Athlon": "AMD",
+
+    # Apple & Fallback (Other)
+    "Apple M1": "Other",
+    "Apple M2": "Other",
+    "Other": "Other"
+}
+GPU_MAP = {
+    # Intel
+    "Intel HD Graphics": "Intel",
+    "Intel UHD Graphics": "Intel",
+    "Intel Iris Xe": "Intel",
+
+    # Nvidia
+    "Nvidia GeForce GTX 1050": "Nvidia",
+    "Nvidia GeForce GTX 1650": "Nvidia",
+    "Nvidia GeForce RTX 2060": "Nvidia",
+    "Nvidia GeForce RTX 3060": "Nvidia",
+    "Nvidia GeForce RTX 4090": "Nvidia",
+
+    # AMD
+    "AMD Radeon Vega 8": "AMD",
+    "AMD Radeon RX 5600M": "AMD",
+    "AMD Radeon RX 6800M": "AMD",
+
+    # Fallback
+    "Other": "Other"
+}
+companies = [
+    "Dell",
+    "HP", 
+    "Lenovo", 
+    "Apple", 
+    "Asus", 
+    "Acer", 
+    "MSI",
+    "Samsung",
+    "Toshiba",
+    "Huawei",
+    "Microsoft",
+    "Chuwi",
+    "Xiaomi",
+    "Vero",
+    "Razer",
+    "Mediacom",
+    "Google",
+    "Fujitsu",
+    "LG"
+    ]
+typenames = [
+    "Ultrabook", 
+    "Notebook", 
+    "Gaming", 
+    "2 in 1 Convertible", 
+    "Workstation",
+    "Netbook"
+    ]
+osys = [
+    "Windows 11",
+    "Windows 10", 
+    "Windows 7", 
+    "MacOS", 
+    "Linux", 
+    "No OS"
+    ]
 
 
+# User inputs
+company = st.selectbox("Company", sorted(companies))
+typename = st.selectbox("Type", sorted(typenames))
+cpu_choice = st.selectbox("CPU Brand", sorted(list(CPU_MAP.keys())))
+cpu = CPU_MAP.get(cpu_choice, "Other")  # Default to "Other" if not found.
+gpu_choice = st.selectbox("GPU Brand", sorted(list(GPU_MAP.keys())))
+gpu = GPU_MAP.get(gpu_choice, "Other")
+opsys = st.selectbox("Operating System", sorted(osys))
+touch = 1 if st.checkbox("Touchscreen", help="Check if the laptop has a touchscreen display.") else 0
 
-
-st.set_page_config(page_title="💻 Laptop Price Predictor", layout="centered")
-st.title("💻 Laptop Price Predictor")
-st.markdown("Enter laptop details below to predict its price in Euros (€).")
-
-# Input fields
-company = st.selectbox("Company", ["Apple", "HP", "Dell", "Lenovo", "Asus", "Acer", "MSI", "Other"])
-typename = st.selectbox("Type", ["Ultrabook", "Notebook", "Gaming", "2 in 1 Convertible", "Workstation"])
-inches = st.number_input("Screen Size (Inches)", min_value=10.0, max_value=20.0, step=0.1)
-cpu = st.selectbox("CPU", ["Intel Core i5 2.3GHz", "Intel Core i5 1.8GHz", "Intel Core i7 2.7GHz", "Intel Core i7 3.1GHz", "Other"])
-ram = st.number_input("RAM (GB)", min_value=2, max_value=64, step=2)
-gpu = st.selectbox("GPU", ["Intel HD Graphics 620", "Intel Iris Plus Graphics 640", "AMD Radeon Pro 455", "Nvidia GTX 1050", "Other"])
-opsys = st.selectbox("Operating System", ["Windows", "macOS", "Linux", "No OS", "Other"])
+ram = st.slider("RAM (GB)", min_value=4, max_value=128, step=4, value=8)
 weight = st.number_input("Weight (kg)", min_value=0.5, max_value=5.0, step=0.1)
+ssd = st.number_input("SSD size (GB)", min_value=0, max_value=4000, value=512, step=128)
+hdd = st.number_input("HDD size (GB)", min_value=0, max_value=6000, value=0, step=500)
+flash = st.number_input("Flash Storage (GB)", min_value=0, max_value=1000, value=0, step=128)
+hybrid = st.number_input("Hybrid storage (GB)", min_value=0, max_value=2000, value=0, step=500)
+inches = st.slider("Screen Size (inches)", min_value=10.0, max_value=20.0, step=0.1, value=12.0)
 
-ssd = st.number_input("SSD (GB)", min_value=0, max_value=2000, step=128)
-hdd = st.number_input("HDD (GB)", min_value=0, max_value=2000, step=128)
-hybrid = st.number_input("Hybrid (GB)", min_value=0, max_value=2000, step=128)
-flash_storage = st.number_input("Flash Storage (GB)", min_value=0, max_value=512, step=32)
-touchscreen = st.selectbox("Touchscreen", [0, 1])
-x_res = st.number_input("X Resolution", min_value=800, max_value=4000, step=100)
-y_res = st.number_input("Y Resolution", min_value=600, max_value=2500, step=100)
+# Normalizing Company Casing
+if company == "HP": company = "Hp"
+if company == "MSI": company = "Msi"
 
+# Normalize OS
+if opsys == "Windows 11": opsys = "Windows 10"
 
 # Predict Button
-
-if st.button("🔮 Predict Price"):
-    if model is not None:
-        # Prepare input DataFrame
-        input_data = pd.DataFrame([{
+if st.button("Predict Price"):
+    try:
+        # Build input DataFrame
+        received_data = {
             "Company": company,
             "TypeName": typename,
             "Inches": inches,
-            "Cpu": cpu,
             "Ram": ram,
-            "Gpu": gpu,
-            "OpSys": opsys,
             "Weight": weight,
+            "OpSys": opsys,
             "SSD": ssd,
             "HDD": hdd,
             "Hybrid": hybrid,
-            "Flash_Storage": flash_storage,
-            "Touchscreen": touchscreen,
-            "X_resolution": x_res,
-            "Y_resolution": y_res
-        }])
+            "Flash_Storage": flash,
+            "Cpu_brand": cpu,
+            "Gpu_brand": gpu
+        }
 
-        # Predict
-        prediction = model.predict(input_data)[0]
-        st.success(f"💰 Estimated Price: **€{prediction:,.2f}**")
-    else:
-        st.error(" No model available. Please train and save a model first.")
+        # NOTE: Applying the same preprocessing (target encoding + scaling) here.
+        input_data = preprocess_input(received_data, feature_names)
+
+        # st.write("Encoded sample shape:", input_data.shape)
+        # st.write("Model expects:", len(feature_names), "features")
+        # missing = set(feature_names) - set(input_data.columns)
+        # extra = set(input_data.columns) - set(feature_names)
+        # st.write("Missing features:", missing)
+        # st.write("Unexpected extra features:", extra)
+
+        # Prediction
+        with st.spinner("Calculating..."):
+            sleep(1.0)
+            prediction = predict_price(model, input_data)
+            # prediction = model.predict(input_data)[0]
+        
+        # Sanity bounds (based on your dataset: €100 - €6999)
+        if prediction is not None:
+            if prediction < 100 or prediction > 6999:  # Bounds based on dataset and logic.
+                log_event("warn", "Prediction", str(received_data), f"Unrealistic prediction: {prediction:.2f}")
+                st.warning(f"Prediction seems unrealistic (€{prediction:,.2f}). Please re-check your inputs.")
+            else:
+                st.toast("Prediction ready!")
+                sleep(1.0)
+                final_price(prediction, company, typename, touch)
+                
+        else:
+            st.error(f"Prediction failed. Please try again.")
+
+    except Exception as e:
+        log_event("error", "StreamlitApp", str(received_data), f"Prediction failed: {e}")
+        st.error(f"Something went wrong while generating the prediction. Please check your inputs and try again.")
+
