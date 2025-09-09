@@ -1,0 +1,42 @@
+[2025-09-09 01:08:42] ERROR | Field: StreamlitApp | Value: '{'Company': {0: 'Dell'}, 'TypeName': {0: 'Gaming'}, 'Inches': {0: 15.6}, 'Ram': {0: 16}, 'Weight': {0: 2.4}, 'OpSys': {0: 'Windows 10'}, 'SSD': {0: 512}, 'HDD': {0: 0}, 'Hybrid': {0: 0}, 'Flash_Storage': {0: 0}, 'Cpu_brand': {0: 'Intel'}, 'Gpu_brand': {0: 'Nvidia'}}' | Prediction failed: Must pass 2-d input. shape=(1, 1, 12)
+[2025-09-09 01:10:52] ERROR | Field: StreamlitApp | Value: '{'Company': {0: 'Dell'}, 'TypeName': {0: 'Gaming'}, 'Inches': {0: 15.6}, 'Ram': {0: 16}, 'Weight': {0: 2.4}, 'OpSys': {0: 'Windows 10'}, 'SSD': {0: 512}, 'HDD': {0: 0}, 'Hybrid': {0: 0}, 'Flash_Storage': {0: 0}, 'Cpu_brand': {0: 'Intel'}, 'Gpu_brand': {0: 'Nvidia'}}' | Prediction failed: Must pass 2-d input. shape=(1, 1, 12)
+[2025-09-09 01:11:17] ERROR | Field: StreamlitApp | Value: '{'Company': {0: 'Dell'}, 'TypeName': {0: 'Gaming'}, 'Inches': {0: 15.6}, 'Ram': {0: 16}, 'Weight': {0: 2.4}, 'OpSys': {0: 'Windows 10'}, 'SSD': {0: 512}, 'HDD': {0: 0}, 'Hybrid': {0: 0}, 'Flash_Storage': {0: 0}, 'Cpu_brand': {0: 'Intel'}, 'Gpu_brand': {0: 'Nvidia'}}' | Prediction failed: Must pass 2-d input. shape=(1, 1, 12)
+[2025-09-09 01:14:11] ERROR | Field: PREDICT | Value: 'Empty DataFrame
+Columns: []
+Index: [0]' | Prediction failure: at least one array or dtype is required
+[2025-09-09 01:58:55] WARN | Field: Prediction | Value: '{'Company': 'Dell', 'TypeName': 'Ultrabook', 'Inches': 12.0, 'Ram': 8, 'Weight': 0.5, 'OpSys': 'Windows 10', 'SSD': 512, 'HDD': 0, 'Hybrid': 0, 'Flash_Storage': 0, 'Cpu_brand': 'Intel', 'Gpu_brand': 'Intel'}' | Unrealistic prediction: 83259.30
+[2025-09-09 02:00:59] WARN | Field: Prediction | Value: '{'Company': 'Dell', 'TypeName': 'Ultrabook', 'Inches': 12.0, 'Ram': 8, 'Weight': 0.5, 'OpSys': 'Windows 10', 'SSD': 512, 'HDD': 0, 'Hybrid': 0, 'Flash_Storage': 0, 'Cpu_brand': 'Intel', 'Gpu_brand': 'Intel'}' | Unrealistic prediction: 83259.30
+[2025-09-09 02:02:14] WARN | Field: Prediction | Value: '{'Company': 'Dell', 'TypeName': 'Notebook', 'Inches': 15.6, 'Ram': 8, 'Weight': 2.0000000000000004, 'OpSys': 'Windows 10', 'SSD': 512, 'HDD': 0, 'Hybrid': 0, 'Flash_Storage': 0, 'Cpu_brand': 'Intel', 'Gpu_brand': 'Intel'}' | Unrealistic prediction: 83198.80
+[2025-09-09 02:15:28] ERROR | Field: StreamlitApp | Value: '{'Company': 'Dell', 'TypeName': 'Notebook', 'Inches': 15.6, 'Ram': 16, 'Weight': 2.2, 'OpSys': 'Windows 10', 'SSD': 512, 'HDD': 0, 'Hybrid': 0, 'Flash_Storage': 0, 'Cpu_brand': 'Intel', 'Gpu_brand': 'Nvidia'}' | Prediction failed: preprocess_input() missing 1 required positional argument: 'scaler'
+[2025-09-09 02:16:02] WARN | Field: Prediction | Value: '{'Company': 'Dell', 'TypeName': 'Notebook', 'Inches': 15.6, 'Ram': 16, 'Weight': 2.2, 'OpSys': 'Windows 10', 'SSD': 512, 'HDD': 0, 'Hybrid': 0, 'Flash_Storage': 0, 'Cpu_brand': 'Intel', 'Gpu_brand': 'Nvidia'}' | Unrealistic prediction: -255.80
+[2025-09-09 03:53:50] ERROR | Field: StreamlitApp | Value: '{'Company': 'Dell', 'TypeName': 'Notebook', 'Inches': 15.6, 'Ram': 16, 'Weight': 2.2, 'OpSys': 'Windows 10', 'SSD': 512, 'HDD': 0, 'Hybrid': 0, 'Flash_Storage': 0, 'Cpu_brand': 'Intel', 'Gpu_brand': 'Nvidia'}' | Prediction failed: The feature names should match those that were passed during fit.
+Feature names unseen at fit time:
+- Company
+- Cpu_brand
+- Gpu_brand
+- OpSys
+- TypeName
+Feature names seen at fit time, yet now missing:
+- Company_Acer
+- Company_Apple
+- Company_Asus
+- Company_Chuwi
+- Company_Dell
+- ...
+
+[2025-09-09 03:54:09] ERROR | Field: StreamlitApp | Value: '{'Company': 'Dell', 'TypeName': 'Notebook', 'Inches': 15.6, 'Ram': 16, 'Weight': 2.2, 'OpSys': 'Windows 10', 'SSD': 512, 'HDD': 0, 'Hybrid': 0, 'Flash_Storage': 0, 'Cpu_brand': 'Intel', 'Gpu_brand': 'Nvidia'}' | Prediction failed: The feature names should match those that were passed during fit.
+Feature names unseen at fit time:
+- Company
+- Cpu_brand
+- Gpu_brand
+- OpSys
+- TypeName
+Feature names seen at fit time, yet now missing:
+- Company_Acer
+- Company_Apple
+- Company_Asus
+- Company_Chuwi
+- Company_Dell
+- ...
+
+[2025-09-09 04:20:49] ERROR | Field: StreamlitApp | Value: '{'Company': 'Dell', 'TypeName': 'Notebook', 'Inches': 14.6, 'Ram': 8, 'Weight': 1.4999999999999996, 'OpSys': 'Windows 10', 'SSD': 256, 'HDD': 0, 'Hybrid': 0, 'Flash_Storage': 0, 'Cpu_brand': 'Intel', 'Gpu_brand': 'Nvidia'}' | Prediction failed: final_price() missing 2 required positional arguments: 'company' and 'typename'
